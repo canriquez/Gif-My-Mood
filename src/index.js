@@ -1,3 +1,6 @@
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import './style.css';
 
 const header = document.querySelector('header');
@@ -47,8 +50,7 @@ function showHeroes(jsonObj) {
     }
 }
 
-
-document.addEventListener('DOMContentLoaded', () => {
+function populateHeroes() {
     const requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
 
     const request = new XMLHttpRequest();/* Build object for request */
@@ -63,25 +65,44 @@ document.addEventListener('DOMContentLoaded', () => {
         showHeroes(superHeroes);
     };
 
+}
 
-    // example on Swallowing Any Errors/Exceptions
+function loadApiGiphyCall(topic = 'cats') {
+    const img = document.querySelector('img')
+    fetch('https://api.giphy.com/v1/gifs/translate?api_key=50YVJEj4njpCtOZIPv2HcIKoRAWbuS0B&s=' + topic,
+        { mode: 'cors' })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (response) {
+            img.src = response.data.images.original.url;
+        });
+}
 
-    const p = new Promise((resolve, reject) => {
-        foo.bar();
-        resolve(42);
-        reject(22);
-    });
+function getMyMood() {
 
-    p.then(
-        (val) => {
-            console.log(`I will never execute eheheheh ...${val}`);
-        },
-        (err) => {
-            console.log('this is an error');
-            // console.log(err);
-        },
-    );
+    function processMood() {
+        let myInput = document.getElementById("myInput");
+        //console.log(myInput);
+        if (myInput.value != '') {
+            console.log("my input is" + myInput.value);
+            loadApiGiphyCall(myInput.value);
+            myInput.value = '';
+        } else {
+            return;
+        }
+    }
 
-    const p2 = Promise.resolve(42);
-    console.log(p2.then((val) => { console.log(`my val is ${val}`); }));
+    const button = document.getElementById('moodButton');
+    button.addEventListener('click', processMood, false);
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+
+
+    /* Adding API call giphy */
+    getMyMood();
+
+
 });

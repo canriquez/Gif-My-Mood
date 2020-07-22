@@ -10,8 +10,8 @@
 body {
   background-color: #f8f9fa;
   font-family: futura-light, sans-serif;
-  width: 800px;
   margin: 0 auto;
+  height: 100vh;
 }
 
 /* ================ fonts ================ */
@@ -60,18 +60,18 @@ body {
 
 /* ================ section ================ */
 html {
-  font-family: "helvetica neue", helvetica, arial, sans-serif;
+  font-family: futura-thin, sans-serif;
 }
 
 h1,
 h2 {
-  font-family: "Faster One", cursive;
+  font-family: futura-bold, sans-serif;
 }
 
 /* header styles */
 
 header h1 {
-  font-size: 4rem;
+  font-size: 2rem;
   text-align: center;
 }
 
@@ -100,4 +100,41 @@ h2 {
   font-size: 2.5rem;
   letter-spacing: -5px;
   margin-bottom: 10px;
+}
+
+/* navbar */
+
+header nav h1 {
+  color: white;
+  text-align: center;
+}
+
+#get-mood {
+  margin: 25px auto;
+}
+
+#get-mood button,
+#get-mood input {
+  font-size: 2rem;
+}
+
+#giphy-test img {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50vw;
+  height: 60vh;
+  object-fit: cover;
+}
+
+.wish {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+#myInput,
+.input-row,
+#moodButton {
+  width: 100%;
 }
