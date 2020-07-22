@@ -66,24 +66,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // example on Swallowing Any Errors/Exceptions
 
-    var p = new Promise(function (resolve, reject) {
+    const p = new Promise((resolve, reject) => {
         foo.bar();
         resolve(42);
-    })
+        reject(22);
+    });
 
     p.then(
-        function fullfilled(val) {
-            console.log("I will never execute eheheheh ..." + val);
+        (val) => {
+            console.log(`I will never execute eheheheh ...${val}`);
         },
-        function rejected(err) {
-            console.log("this is an error");
-            //console.log(err);
-        }
+        (err) => {
+            console.log('this is an error');
+            // console.log(err);
+        },
     );
 
-    let p2 = Promise.resolve(42);
-    console.log(p2.then(function (val) { console.log("my val is " + val); }));
-
-
-
+    const p2 = Promise.resolve(42);
+    console.log(p2.then((val) => { console.log(`my val is ${val}`); }));
 });
