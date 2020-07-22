@@ -2,6 +2,10 @@
 
 Basic form to consume a "on demand" giphy GIF (API) based on input text
 
+# Live demo
+
+[live demo](https://rawcdn.githack.com/canriquez/JSON_practice/bf933f0f945db89e78a6adb050eef7f75ee0ca5d/dist/index.html)
+
 ![screenshot](./app_image.png)
 
 # Project Details
