@@ -75,7 +75,18 @@ function loadApiGiphyCall(topic = 'cats') {
             return response.json();
         })
         .then(function (response) {
-            img.src = response.data.images.original.url;
+            let foundUrl = response.data.images.original.url;
+            console.log("response :" + foundUrl);
+            if (!foundUrl) {
+                console.log("I havent found anything");
+                return Promise.reject("failed to find")
+            } else {
+                img.src = response.data.images.original.url;
+            }
+        })
+        .catch(function (err) {
+            console.log('nothing found :' + err);
+
         });
 }
 
