@@ -1,21 +1,21 @@
-# Vanilla JavaScript Template
+# Gif My Mood: API practice project
 
-Generic Simple Vanilla JavaScript template
+Basic form to consume a "on demand" giphy GIF (API) based on input text
+
+![screenshot](./app_image.png)
 
 # Project Details
  
-Includes basic configuration for 
-- WebPack basic config (CSS/icons/images/files)
-- ESlint, Stylelint
-- Github linters
-- JS/HTML/CSS 
-- Basic source fonts: open source Futura (./src/fonts/futura)
+- The projects builds a simple page with a single "text" input.
+- fetches a new image based on the key search text 
+- renders the image in the page without refreshing the page.
 
 ## Built With
 
 - HTML/CSS, Javascript, Webpack, NPM, yarn.
 - ESlint, Stylelint
 - VSCode
+- [Giphy API](https://giphy.com/)
 
 
 ## Getting Started
