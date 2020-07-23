@@ -8,112 +8,107 @@ const section = document.querySelector('section');
 
 
 function populateHeader(jsonObj) {
-    const myH1 = document.createElement('h1');
-    myH1.textContent = jsonObj.squadName;
-    header.appendChild(myH1);
+  const myH1 = document.createElement('h1');
+  myH1.textContent = jsonObj.squadName;
+  header.appendChild(myH1);
 
-    const myPara = document.createElement('p');
-    myPara.textContent = `Hometown: ${jsonObj.homeTown} // Formed: ${jsonObj.formed}`;
-    header.appendChild(myPara);
+  const myPara = document.createElement('p');
+  myPara.textContent = `Hometown: ${jsonObj.homeTown} // Formed: ${jsonObj.formed}`;
+  header.appendChild(myPara);
+  myH1.classList.add('hide');
+  myPara.classList.add('hide');
 }
 
 function showHeroes(jsonObj) {
-    const heroes = jsonObj.members;
+  const heroes = jsonObj.members;
 
-    for (let i = 0; i < heroes.length; i += 1) {
-        const myArticle = document.createElement('article');
-        const myH2 = document.createElement('h2');
-        const myPara1 = document.createElement('p');
-        const myPara2 = document.createElement('p');
-        const myPara3 = document.createElement('p');
-        const myList = document.createElement('ul');
+  for (let i = 0; i < heroes.length; i += 1) {
+    const myArticle = document.createElement('article');
+    const myH2 = document.createElement('h2');
+    const myPara1 = document.createElement('p');
+    const myPara2 = document.createElement('p');
+    const myPara3 = document.createElement('p');
+    const myList = document.createElement('ul');
 
-        myH2.textContent = heroes[i].name;
-        myPara1.textContent = `Secret identity: ${heroes[i].secretIdentity}`;
-        myPara2.textContent = `Age: ${heroes[i].age}`;
-        myPara3.textContent = 'Superpowers:';
+    myArticle.classList.add('hide');
+    myH2.classList.add('hide');
+    myPara1.classList.add('hide');
+    myPara2.classList.add('hide');
+    myPara3.classList.add('hide');
+    myList.classList.add('hide');
 
-        const superPowers = heroes[i].powers;
-        for (let j = 0; j < superPowers.length; j += 1) {
-            const listItem = document.createElement('li');
-            listItem.textContent = superPowers[j];
-            myList.appendChild(listItem);
-        }
+    myH2.textContent = heroes[i].name;
+    myPara1.textContent = `Secret identity: ${heroes[i].secretIdentity}`;
+    myPara2.textContent = `Age: ${heroes[i].age}`;
+    myPara3.textContent = 'Superpowers:';
 
-        myArticle.appendChild(myH2);
-        myArticle.appendChild(myPara1);
-        myArticle.appendChild(myPara2);
-        myArticle.appendChild(myPara3);
-        myArticle.appendChild(myList);
-
-        section.appendChild(myArticle);
+    const superPowers = heroes[i].powers;
+    for (let j = 0; j < superPowers.length; j += 1) {
+      const listItem = document.createElement('li');
+      listItem.textContent = superPowers[j];
+      myList.appendChild(listItem);
     }
+
+    myArticle.appendChild(myH2);
+    myArticle.appendChild(myPara1);
+    myArticle.appendChild(myPara2);
+    myArticle.appendChild(myPara3);
+    myArticle.appendChild(myList);
+
+    section.appendChild(myArticle);
+  }
 }
 
 function populateHeroes() {
-    const requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
+  const requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
 
-    const request = new XMLHttpRequest();/* Build object for request */
+  const request = new XMLHttpRequest();/* Build object for request */
 
-    request.open('GET', requestURL);
-    request.responseType = 'json'; // Define response to JSON
-    request.send(); // sending server request
+  request.open('GET', requestURL);
+  request.responseType = 'json'; // Define response to JSON
+  request.send(); // sending server request
 
-    request.onload = function process() {
-        const superHeroes = request.response;
-        populateHeader(superHeroes);
-        showHeroes(superHeroes);
-    };
-
+  request.onload = function process() {
+    const superHeroes = request.response;
+    populateHeader(superHeroes);
+    showHeroes(superHeroes);
+  };
 }
 
-function loadApiGiphyCall(topic = 'cats') {
-    const img = document.querySelector('img')
-    fetch('https://api.giphy.com/v1/gifs/translate?api_key=50YVJEj4njpCtOZIPv2HcIKoRAWbuS0B&s=' + topic,
-        { mode: 'cors' })
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (response) {
-            let foundUrl = response.data.images.original.url;
-            console.log("response :" + foundUrl);
-            if (!foundUrl) {
-                console.log("I havent found anything");
-                return Promise.reject("failed to find")
-            } else {
-                img.src = response.data.images.original.url;
-            }
-        })
-        .catch(function (err) {
-            console.log('nothing found :' + err);
+async function loadApiGiphyCall(topic = 'cats') {
+  const img = document.querySelector('img');
+  const response = await fetch(`https://api.giphy.com/v1/gifs/translate?api_key=50YVJEj4njpCtOZIPv2HcIKoRAWbuS0B&s=${topic}`,
+    { mode: 'cors' });
+  const responseObject = await response.json();
 
-        });
+  const foundUrl = responseObject.data.images.original.url;
+
+  if (!foundUrl) {
+    return Promise.reject(new Error('I dont have that mood for you!'));
+  }
+  img.src = foundUrl;
+  return Promise.resolve('all green');
 }
+
 
 function getMyMood() {
-
-    function processMood() {
-        let myInput = document.getElementById("myInput");
-        //console.log(myInput);
-        if (myInput.value != '') {
-            console.log("my input is" + myInput.value);
-            loadApiGiphyCall(myInput.value);
-            myInput.value = '';
-        } else {
-            return;
-        }
+  function processMood() {
+    const myInput = document.getElementById('myInput');
+    if (myInput.value !== '') {
+      loadApiGiphyCall(myInput.value).catch(() => {
+        loadApiGiphyCall('error');
+      });
+      myInput.value = '';
     }
+  }
 
-    const button = document.getElementById('moodButton');
-    button.addEventListener('click', processMood, false);
+  const button = document.getElementById('moodButton');
+  button.addEventListener('click', processMood, false);
 }
 
 
 document.addEventListener('DOMContentLoaded', () => {
-
-
-    /* Adding API call giphy */
-    getMyMood();
-
-
+  /* Adding API call giphy */
+  populateHeroes();
+  getMyMood();
 });
