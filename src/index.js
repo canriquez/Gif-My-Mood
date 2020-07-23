@@ -67,37 +67,29 @@ function populateHeroes() {
 
 }
 
-function loadApiGiphyCall(topic = 'cats') {
+async function loadApiGiphyCall(topic = 'cats') {
     const img = document.querySelector('img')
-    fetch('https://api.giphy.com/v1/gifs/translate?api_key=50YVJEj4njpCtOZIPv2HcIKoRAWbuS0B&s=' + topic,
-        { mode: 'cors' })
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (response) {
-            let foundUrl = response.data.images.original.url;
-            console.log("response :" + foundUrl);
-            if (!foundUrl) {
-                console.log("I havent found anything");
-                return Promise.reject("failed to find")
-            } else {
-                img.src = response.data.images.original.url;
-            }
-        })
-        .catch(function (err) {
-            console.log('nothing found :' + err);
+    const response = await fetch('https://api.giphy.com/v1/gifs/translate?api_key=50YVJEj4njpCtOZIPv2HcIKoRAWbuS0B&s=' + topic,
+        { mode: 'cors' });
+    const responseObject = await response.json()
 
-        });
-}
+    let foundUrl = responseObject.data.images.original.url;
+
+    if (!foundUrl) {
+        return Promise.reject("failed to find")
+    } else {
+        img.src = foundUrl;
+    }
+    return;
+};
+
 
 function getMyMood() {
 
     function processMood() {
         let myInput = document.getElementById("myInput");
-        //console.log(myInput);
         if (myInput.value != '') {
-            console.log("my input is" + myInput.value);
-            loadApiGiphyCall(myInput.value);
+            loadApiGiphyCall(myInput.value).catch(function (error) { alert("ther's an error:" + error) });
             myInput.value = '';
         } else {
             return;
