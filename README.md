@@ -6,7 +6,7 @@ Basic form to consume a "on demand" giphy GIF (API) based on input text
 
 [live demo](https://raw.githack.com/canriquez/Gif-My-Mood/master/dist/index.html)
 
-![screenshot](./app_image.png)
+![screenshot](./gifMyMood.gif)
 
 # Project Details
  
