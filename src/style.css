@@ -146,8 +146,8 @@ nav a {
   padding: 5px;
   color: #fff;
   position: absolute;
-  right: 0;
-  bottom: 0;
+  right: 3px;
+  bottom: 3px;
 }
 
 @media only screen and (min-width: 768px) {
@@ -158,5 +158,10 @@ nav a {
     width: 50vw;
     height: 60vh;
     object-fit: cover;
+  }
+
+  header {
+    width: 80%;
+    margin: 0 auto;
   }
 }
